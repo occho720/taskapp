@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // DB内のタスクが格納されるリスト。
         // 日付の近い順でソート：昇順
         // 以降内容をアップデートするとリスト内は自動的に更新される。
-    var taskarray = try! Realm() .objacts(Task.self) .sorted(byKeyPath: "date", ascending: true)
+    var taskArray = try! Realm() .objects(Task.self) .sorted(byKeyPath: "date", ascending: true)
     
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let inputViewController:InputViewController = segue.destination as! InputViewController
         
         if segue.identifier == "cellSegue" {
-            let indexPath = self. tableView.indexPathForSelectedRow
+            let indexPath = self.tableView.indexPathForSelectedRow
             inputViewController.task = taskArray[indexPath!.row]
         } else {
             let task = Task()
@@ -108,7 +108,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // --- ここから ---
         if editingStyle == .delete{
             // 削除するタスクを取得する
-            let task = serf.taskArray[indexPath.row]
+            let task = self.taskArray[indexPath.row]
             
             // ローカル通知をキャンセルする
             let center = UNUserNotificationCenter.current()
@@ -116,7 +116,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             // データベースから削除する
             try! realm.write {
                 self.realm.delete(task)
-                tabeView.deleteRows(at: [indexPath], with: .fade)
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
             
             // 未通知のローカル通知一覧をログ出力
@@ -128,9 +128,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
         } // --- ここまで ---
-        
     }
-    
 
 }
 

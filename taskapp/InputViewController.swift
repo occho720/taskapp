@@ -32,11 +32,17 @@ class InputViewController: UIViewController {
         datePicker.date = task.date
     }
     
+    @objc func dismissKeyboard(){
+        // キーボードを閉じる
+        view.endEditing(true)
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         try! realm.write {
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
-            self.task,date = self.datePicker.Date
+            self.task.date = self.datePicker.date
             self.realm.add(self.task, update: .modified)
         }
         
@@ -86,10 +92,7 @@ class InputViewController: UIViewController {
         }
     } // --- ここまで追加 ---
     
-    @objc func dismissKeyboard(){
-        // キーボードを閉じる
-        view.endEditing(true)
-    }
+   
     
 
     /*
