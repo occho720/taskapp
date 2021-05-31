@@ -38,7 +38,7 @@ class InputViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         try! realm.write {
             self.task.title = self.titleTextField.text!
             self.task.contents = self.contentsTextView.text
@@ -48,7 +48,7 @@ class InputViewController: UIViewController {
         
         setNotification(task: task)
         
-        super.viewWillAppear(animated)
+        super.viewWillDisappear(animated)
     }
     
     // タスクのローカル通知を登録する --- ここから ---
